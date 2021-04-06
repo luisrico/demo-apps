@@ -40,8 +40,13 @@ items:
         - image: image-registry.openshift-image-registry.svc:5000/default/photo-album
           name: photo-album
           env:
+            - name: BUCKET_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: photo-album
+                  key: BUCKET_HOST
             - name: ENDPOINT_URL
-              value: 'https://s3-openshift-storage.{{domain}}'
+              value: "https://$(BUCKET_HOST)"
             - name: BUCKET_NAME
               valueFrom:
                 configMapKeyRef:
